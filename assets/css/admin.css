@@ -1,0 +1,11 @@
+.clear { clear: both; }
+
+.row { margin: 5px 0px; }
+
+.label { float: left; width: 20%; }
+
+.input { float: left; width: 80%; }
+
+.input input[type='button'] { border: 0px; font-size: 11px; }
+
+.advertising-image { width: 15%; }
