@@ -19,4 +19,6 @@ if ( is_admin() )
 	require_once DA_DIR . '/inc/backend.php';
 }
 
+require_once DA_DIR . '/inc/common.php';
+require_once DA_DIR . '/inc/frontend.php';
 require_once DA_DIR . '/inc/widget.php';

@@ -26,7 +26,38 @@ class DA_Widget extends WP_Widget
 	 */
 	public function widget( $args, $instance )
 	{
-		// outputs the content of the widget
+		$args = array(
+			'posts_per_page'    => $instance['number'],
+			'post_type'         => 'advertising',
+		);
+
+		if ( $instance['position'] )
+		{
+			$args['tax_query'] =  array(
+				array(
+					'taxonomy' => 'position',
+					'field'    => 'term_id',
+					'terms'    => intval( $instance['position'] ),
+				),
+			);
+		}
+
+		$posts = get_posts( $args );
+
+		foreach ( $posts as $post )
+		{
+			$post_id = $post->ID;
+			printf( '
+				<a href="%s" target="%s" title="%s">
+					<img src="%s" alt="%s" class="adv-img">
+				</a>',
+				get_post_meta( $post_id, 'link', true ),
+				get_post_meta( $post_id, 'type', true ),
+				$post->post_title,
+				get_post_meta( $post_id, 'file', true ),
+				get_post_meta( $post_id, 'alt', true )
+			);
+		}
 	}
 
 	/**
@@ -46,7 +77,7 @@ class DA_Widget extends WP_Widget
 		<p>
 			<label><?php _e( 'Position' ); ?>:</label>
 			<select name="<?php echo $this->get_field_name( 'position' ); ?>">
-				<option value=""><?php _e( 'All', 'da' ); ?></option>
+				<option value="0"><?php _e( 'All', 'da' ); ?></option>
 				<?php
 				foreach ( $terms as $term )
 				{
