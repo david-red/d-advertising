@@ -13,6 +13,8 @@ class Backend
 
 		add_filter( 'manage_advertising_posts_columns', array( $this, 'advertising_columns' ) );
 		add_action( 'manage_advertising_posts_custom_column', array( $this, 'show_advertising_columns' ), 10, 2 );
+
+		add_action( 'restrict_manage_posts', array( $this, 'filter_advertising' ) );
 	}
 
 	/**
@@ -59,6 +61,33 @@ class Backend
 		);
 
 		register_post_type( 'advertising', $args );
+
+		$tax_labels = array(
+			'name'                       => __( 'Positions', 'da' ),
+			'singular_name'              => __( 'Position', 'da' ),
+			'search_items'               => __( 'Search Positions', 'da' ),
+			'all_items'                  => __( 'All Positions', 'da' ),
+			'parent_item'                => __( 'Parent Position', 'da' ),
+			'parent_item_colon'          => __( 'Parent Position:', 'da' ),
+			'edit_item'                  => __( 'Edit Position', 'da' ),
+			'update_item'                => __( 'Update Position', 'da' ),
+			'add_new_item'               => __( 'Add New Position', 'da' ),
+			'new_item_name'              => __( 'New Position', 'da' ),
+			'add_or_remove_items'        => __( 'Add Or Remove Position', 'da' ),
+			'not_found'                  => __( 'Not Position Found', 'da' ),
+			'menu_name'                  => __( 'Positions', 'da' ),
+		);
+
+		$tax_args = array(
+			'hierarchical'          => true,
+			'labels'                => $tax_labels,
+			'show_ui'               => true,
+			'show_admin_column'     => true,
+			'query_var'             => true,
+			'rewrite'               => array( 'slug' => 'position' ),
+		);
+
+		register_taxonomy( 'position', 'advertising', $tax_args );
 	}
 
 	/**
@@ -141,6 +170,14 @@ class Backend
 		return $columns;
 	}
 
+	/**
+	 * Show advertising columns in management page
+	 *
+	 * @param string $column_name
+	 * @param int $post_id
+	 *
+	 * @return void
+	 */
 	function show_advertising_columns( $column_name, $post_id )
 	{
 		if ( 'file' == $column_name )
@@ -149,6 +186,37 @@ class Backend
 				<img src="%s" class="advertising-image">',
 				get_post_meta( $post_id, 'file', true )
 			);
+		}
+	}
+
+	/**
+	 * Create filter list advertising by position
+	 *
+	 * @return void
+	 */
+	function filter_advertising()
+	{
+		global $typenow;
+
+		if( 'advertising' == $typenow )
+		{
+			$tax_obj	= get_taxonomy( 'position' );
+			$tax_name	= $tax_obj->labels->name;
+			$terms 		= get_terms( 'position' );
+			if( count( $terms ) > 0 )
+			{
+				printf( '
+					<select name="position" id="position" class="postform">
+						<option value="">%s %s</option>',
+					__( 'Show All', 'da' ),
+					$tax_name
+				);
+				foreach ( $terms as $term )
+				{
+					echo '<option value='. $term->slug, $_GET['position'] == $term->slug ? ' selected="selected"' : '','>' . $term->name . '</option>';
+				}
+				echo "</select>";
+			}
 		}
 	}
 }
