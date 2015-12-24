@@ -1,6 +1,6 @@
 <?php
 
-class Backend
+class DA_Backend
 {
 	public function __construct()
 	{
@@ -221,4 +221,4 @@ class Backend
 	}
 }
 
-new Backend;
+new DA_Backend;
