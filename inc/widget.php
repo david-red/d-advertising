@@ -46,16 +46,24 @@ class DA_Widget extends WP_Widget
 
 		foreach ( $posts as $post )
 		{
-			$post_id = $post->ID;
+			$post_id    = $post->ID;
+			$style      = '';
+			$width      = get_post_meta( $post_id, 'width', true );
+			if ( $width )
+			{
+				$style .= 'style="width: ' . $width . '%; float: left;"';
+			}
+
 			printf( '
 				<a href="%s" target="%s" title="%s">
-					<img src="%s" alt="%s" class="adv-img">
+					<img src="%s" alt="%s" class="adv-img"%s>
 				</a>',
 				get_post_meta( $post_id, 'link', true ),
 				get_post_meta( $post_id, 'type', true ),
 				$post->post_title,
 				get_post_meta( $post_id, 'file', true ),
-				get_post_meta( $post_id, 'alt', true )
+				get_post_meta( $post_id, 'alt', true ),
+				$style
 			);
 		}
 	}

@@ -74,6 +74,7 @@ class DA_Backend
 			'link',
 			'alt',
 			'type',
+			'width',
 		);
 
 		foreach ( $meta as $m )

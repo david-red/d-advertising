@@ -7,11 +7,12 @@ $meta = array(
 	'link'      => '',
 	'alt'       => '',
 	'type'      => '',
+	'width'     => 0,
 );
 
 foreach ( $meta as $k => $v )
 {
-	$meta[$k] = get_post_meta( $post->ID, $k, true );
+	$meta[$k] = get_post_meta( $post->ID, $k, true ) ? get_post_meta( $post->ID, $k, true ) : $meta[$k];
 }
 ?>
 
@@ -42,6 +43,16 @@ foreach ( $meta as $k => $v )
 	</div>
 	<div class="input">
 		<input type="text" name="alt" id="alt" value="<?php echo $meta['alt']; ?>" size="60">
+	</div>
+	<div class="clear"></div>
+</div>
+
+<div class="row">
+	<div class="label">
+		<?php _e( 'Width', 'da' ); ?>
+	</div>
+	<div class="input">
+		<input type="number" name="width" id="width" value="<?php echo $meta['width']; ?>" max="100" min="0"> %
 	</div>
 	<div class="clear"></div>
 </div>
