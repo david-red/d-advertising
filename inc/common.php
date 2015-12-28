@@ -42,7 +42,7 @@ class DA_Common
 			'show_in_admin_bar'     => true,
 			'can_export'            => true,
 			'has_archive'           => true,
-			'exclude_from_search'   => false,
+			'exclude_from_search'   => true,
 			'publicly_queryable'    => true,
 			'capability_type'       => 'post',
 			'query_var'             => true,
