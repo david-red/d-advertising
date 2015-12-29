@@ -45,6 +45,13 @@ class DA_Backend
 	 */
 	function enqueue()
 	{
+		$screen = get_current_screen();
+
+		if ( 'advertising' != $screen->post_type )
+		{
+			return;
+		}
+
 		wp_enqueue_media();
 		wp_enqueue_style( 'da-backend', DA_URL . '/assets/css/' . 'backend.css' );
 		wp_enqueue_script( 'da-backend', DA_URL . '/assets/js/' . 'backend.js', array( 'jquery' ) );
