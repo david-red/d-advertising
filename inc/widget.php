@@ -83,7 +83,7 @@ class DA_Widget extends WP_Widget
 		$current_num    = empty( $current_num ) ? 5 : $current_num;
 ?>
 		<p>
-			<label><?php _e( 'Position' ); ?>:</label>
+			<label><?php _e( 'Position', 'da' ); ?>:</label>
 			<select name="<?php echo $this->get_field_name( 'position' ); ?>">
 				<option value="0"><?php _e( 'All', 'da' ); ?></option>
 				<?php
@@ -100,7 +100,7 @@ class DA_Widget extends WP_Widget
 			</select>
 		</p>
 		<p>
-			<label><?php _e( 'Number' ); ?>:</label>
+			<label><?php _e( 'Number', 'da' ); ?>:</label>
 			<input type="number" value="<?php echo $current_num; ?>" name="<?php echo $this->get_field_name( 'number' ); ?>">
 		</p>
 <?php
