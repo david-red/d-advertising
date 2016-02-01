@@ -66,6 +66,8 @@ class DA_Widget extends WP_Widget
 				$style
 			);
 		}
+
+		echo '<div style="clear: left;"></div>';
 	}
 
 	/**
@@ -78,9 +80,8 @@ class DA_Widget extends WP_Widget
 	public function form( $instance )
 	{
 		$terms          = get_terms( 'position' );
-		$current_term   = esc_attr( $instance['position'] );
-		$current_num    = esc_attr( $instance['number'] );
-		$current_num    = empty( $current_num ) ? 5 : $current_num;
+		$current_term   = ! empty( $instance['position'] ) ? esc_attr( $instance['position'] ) : '';
+		$current_num    = ! empty( $instance['number'] ) ? esc_attr( $instance['number'] ) : 5;
 ?>
 		<p>
 			<label><?php _e( 'Position', 'da' ); ?>:</label>
